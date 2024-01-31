@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\StatusProduct;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,8 +12,7 @@ class Product extends Model
     use HasFactory, HasUuids;
 
     protected $casts = [
-        'price' => 'decimal:2',
-        'status' => 'string'
+        'status' => StatusProduct::class,
     ];
 
     protected $fillable = [
