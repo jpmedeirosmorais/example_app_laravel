@@ -21,7 +21,6 @@ class Category extends Model
 
     protected function name(): Attribute
     {
-        $this->setSlug($this->attributes->get('name'));
 
         return Attribute::make(
             get: fn ($value) => Str::title($value),
@@ -29,13 +28,13 @@ class Category extends Model
         );
     }
 
-    protected function setSlug($name): void
+    protected function slug($name): Attribute
     {
-        $this->attributes['slug'] = Str::slug($name);
+        return Attribute::make(
+            get: fn ($value) => Str::slug($this->Attributes->get($name)),
+            set: fn ($value) => Str::slug($this->Attributes->get($name))
+        );
+
     }
-
-
-
-
 
 }
