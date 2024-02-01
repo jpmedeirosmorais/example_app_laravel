@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -12,18 +14,28 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    public function products()
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function scopeActive($query)
+    protected function name(): Attribute
     {
-        return $query->where('status', 'active');
+        $this->setSlug($this->attributes->get('name'));
+
+        return Attribute::make(
+            get: fn ($value) => Str::title($value),
+            set: fn ($value) => Str::title($value)
+        );
     }
 
-    public function scopeInactive($query)
+    protected function setSlug($name): void
     {
-        return $query->where('status', 'inactive');
+        $this->attributes['slug'] = Str::slug($name);
     }
+
+
+
+
+
 }

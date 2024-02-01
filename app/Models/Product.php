@@ -6,6 +6,7 @@ use App\Models\Enums\StatusProduct;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -23,16 +24,17 @@ class Product extends Model
         'status',
     ];
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-    public function scopeActive($query)
+
+    public function scopeActive($query): StatusProduct
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeInactive($query)
+    public function scopeInactive($query): StatusProduct
     {
         return $query->where('status', 'inactive');
     }
