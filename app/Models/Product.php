@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static findOrFail(string $id)
+ * @method static create(array $all)
  */
 class Product extends Model
 {
