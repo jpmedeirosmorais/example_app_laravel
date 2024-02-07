@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
+
+/**
+ * @method static findOrFail(string $id)
+ * @method static create(array $all)
+ */
 class Category extends Model
 {
 
