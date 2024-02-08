@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description');
             $table->softDeletes();
             $table->timestamps();
-            $table->enum('status', ['active', 'inactive']);
+            $table->enum('status', ['active', 'inactive'])->default('active');
         });
     }
 
