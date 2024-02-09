@@ -12,12 +12,15 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return new CategoryResource(Category::all());
+        return new CategoryResource(Category::paginate(10, ['id', 'name', 'slug']));
     }
 
     public function store(CategoryRequest $request)
     {
-        return Category::create($request->getValues());
+        return Category::create([
+            'name' => $this->name,
+            'slug' => Str::of($this->name)->slug('-')
+        ]);
     }
 
     public function show(string $id)
