@@ -12,29 +12,29 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return new CategoryResource(Category::paginate(10, ['id', 'name', 'slug']));
+        return CategoryResource::collection(Category::simplePaginate());
     }
 
     public function store(CategoryRequest $request)
     {
-        return Category::create([
-            'name' => $this->name,
-            'slug' => Str::of($this->name)->slug('-')
-        ]);
+        return new CategoryResource(Category::create([
+            'name' => $request->name,
+            'slug' => Str::of($request->name)->slug('-')
+        ]));
     }
 
     public function show(string $id)
     {
-        return Category::findOrFail($id);
+        return new CategoryResource(Category::findOrFail($id));
     }
 
     public function update(Request $request, string $id)
     {
-        return Category::findOrFail($id)->update($request->all());
+        return new CategoryResource(Category::findOrFail($id)->update($request->all()));
     }
 
     public function destroy(string $id)
     {
-        return Category::findOrFail($id)->delete();
+        return new CategoryResource(Category::findOrFail($id)->delete());
     }
 }

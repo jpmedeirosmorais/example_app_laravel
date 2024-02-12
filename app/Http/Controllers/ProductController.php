@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductResource(Product::paginate(10, ['id', 'name', 'description', 'price', 'category_id']));
+        return ProductResource::collection(Product::simplePaginate(10));
     }
 
     /**
@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        return Product::create($request->all());
+        return new ProductResource(Product::create($request->all()));
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return Product::findOrFail($id);
+        return new ProductResource(Product::findOrFail($id));
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return Product::findOrFail($id)->update($request->all());
+        return new ProductResource(Product::findOrFail($id)->update($request->all()));
     }
 
     /**
@@ -46,6 +46,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        return Product::findOrFail($id)->delete();
+        return new ProductResource(Product::findOrFail($id)->delete());
     }
 }
