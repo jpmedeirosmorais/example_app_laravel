@@ -29,5 +29,4 @@ class Category extends Model
     {
          return $this->slug = Str::slug($this->name, '-');
     }
-
 }

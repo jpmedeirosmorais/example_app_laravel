@@ -26,7 +26,7 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['required', 'max:50', 'string'],
             'category_id' => ['required', 'exists:App\Models\Category,id'],
-            'price' => ['required', 'decimal:2'],
+            'price' => ['required', 'numeric:2'],
             'description' => ['string', 'max: 255'],
             'status' => [Rule::enum(StatusProduct::class)]
         ];

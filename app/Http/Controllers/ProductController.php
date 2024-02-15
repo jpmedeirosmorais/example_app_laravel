@@ -22,7 +22,13 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        return new ProductResource(Product::create($request->all()));
+        return new ProductResource(Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'description' => $request->description ?? '',
+            'status' => $request->status ?? 'active'
+        ]));
     }
 
     /**
@@ -38,7 +44,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return new ProductResource(Product::findOrFail($id)->update($request->all()));
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name ?? $product->name,
+            'category_id' => $request->category_id ?? $product->category_id,
+            'price' => $request->price ?? $product->price,
+            'description' => $request->description ?? $product->description,
+            'status' => $request->status ?? $product->status
+        ]);
+
+        return new ProductResource($product);
     }
 
     /**
@@ -46,6 +62,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        return new ProductResource(Product::findOrFail($id)->delete());
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return response()->noContent();
     }
 }
