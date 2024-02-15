@@ -4,7 +4,11 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use \App\Models\Category;
 
+/**
+ * @property Category $resource
+ */
 class CategoryResource extends JsonResource
 {
     /**
@@ -15,9 +19,9 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug
+            'id' => $this->resource->id,
+            'name' => $this->resource->name,
+            'slug' => $this->resource->slug,
         ];
     }
 }

@@ -4,7 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\User;
 
+/**
+ *
+ * @property User $resource
+ */
 class UserResource extends JsonResource
 {
     /**
@@ -15,8 +20,8 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
-            'email' => $this->email
+            'name' => $this->resource->name,
+            'email' => $this->resource->email
         ];
     }
 }
