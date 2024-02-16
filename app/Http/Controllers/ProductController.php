@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,15 +14,21 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return ProductResource::collection(Product::simplePaginate(10));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        return Product::create($request->all());
+        return new ProductResource(Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'description' => $request->description ?? '',
+            'status' => $request->status ?? 'active'
+        ]));
     }
 
     /**
@@ -28,7 +36,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return Product::findOrFail($id);
+        return new ProductResource(Product::findOrFail($id));
     }
 
     /**
@@ -36,7 +44,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return Product::findOrFail($id)->update($request->all());
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name ?? $product->name,
+            'category_id' => $request->category_id ?? $product->category_id,
+            'price' => $request->price ?? $product->price,
+            'description' => $request->description ?? $product->description,
+            'status' => $request->status ?? $product->status
+        ]);
+
+        return new ProductResource($product);
     }
 
     /**
@@ -44,6 +62,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        return Product::findOrFail($id)->delete();
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return response()->noContent();
     }
 }

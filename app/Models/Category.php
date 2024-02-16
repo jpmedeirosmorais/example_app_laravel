@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
-
 /**
- * @method static findOrFail(string $id)
- * @method static create(array $all)
+ * @property string $id
+ * @property string $name
+ * @property string $slug
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Category extends Model
 {
@@ -29,5 +31,4 @@ class Category extends Model
     {
          return $this->slug = Str::slug($this->name, '-');
     }
-
 }

@@ -9,9 +9,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 /**
- * @method static findOrFail(string $id)
- * @method static create(array $all)
+ * @property string $id
+ * @property string $name
+ * @property int $category_id
+ * @property float $price
+ * @property string $description
+ * @property StatusProduct $status
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Product extends Model
 {
